@@ -1,0 +1,7 @@
+---
+consumer_key:        <Hatena application consumer key>
+consumer_secret:     <Hatena application consumer secret>
+access_token:        <Hatena application access token>
+access_token_secret: <Hatena application access token secret>
+user_id:             <Hatena user ID>
+blog_id:             <Hatenablog ID>
