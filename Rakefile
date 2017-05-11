@@ -3,32 +3,23 @@ require "bundler/setup"
 Bundler.require
 
 require "fileutils"
+require "erb"
 
 namespace :"hatena-blog-exporter" do
   desc "export entries for hugo markdown format"
   task :hugo do
     client = Hatenablog::Client.create
+    erb    = File.read("templates/hugo.md.erb")
+    feed   = nil
 
     FileUtils.mkdir('post')
-    feed = nil
 
     loop do
       feed = client.next_feed(feed)
 
       feed.each_entry do |entry|
         File.open("post/#{entry.id}.md", "w+") do |f|
-          f.puts <<~EOS
-          +++
-          date        = "#{entry.updated.strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
-          title       = "#{entry.title}"
-          description = "#{entry.title}"
-          tags        = #{entry.categories.inspect}
-
-          +++
-
-          #{entry.content}
-          EOS
-
+          f.puts ERB.new(erb).result(binding)
           puts "created post/#{entry.id}.md"
         end
       end
