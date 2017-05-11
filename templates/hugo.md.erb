@@ -1,0 +1,9 @@
++++
+date        = "<%= entry.updated.strftime('%Y-%m-%dT%H:%M:%S+09:00') %>"
+title       = "<%= entry.title %>"
+description = "<%= entry.title %>"
+tags        = <%= entry.categories.inspect %>
+
++++
+
+<%= entry.content %>
